@@ -4,7 +4,7 @@ import './page.css';
 
 export default function Home() {
   const [inputText, setInputText] = useState("");
-  const [recipe, setRecipe] = useState({ recipe_name: "", recipe_content: "", });
+  const [recipe, setRecipe] = useState({ recipe_name: '', recipe_content: '', });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -21,7 +21,8 @@ export default function Home() {
       });
       if (response.ok) {
         const result = await response.json();
-        setRecipe(result); // Save the recipe result to state
+        console.log(result);
+        setRecipe(JSON.parse(result.message)); // Save the recipe result to state
       } else {
         console.error("Error:", response.statusText);
       }
@@ -57,7 +58,6 @@ export default function Home() {
           <div className="recipeResults">
             {recipe.recipe_content !== '' && recipe.recipe_name !== '' && (
               <div className="recipeCard">
-                <h2>{recipe.recipe_name}</h2>
                 <div dangerouslySetInnerHTML={{ __html: recipe.recipe_content }} />
               </div>)
             }

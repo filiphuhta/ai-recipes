@@ -16,25 +16,21 @@ export default async function handler(
     const model = genAI.getGenerativeModel({
       // Using `responseMimeType` requires either a Gemini 1.5 Pro or 1.5 Flash model
       model: "gemini-1.5-flash",
-      // Set the `responseMimeType` to output JSON
-      // Pass the schema object to the `responseSchema` field
       generationConfig: {
         responseMimeType: "application/json",
         responseSchema: {
           type: SchemaType.OBJECT,
-            properties: {
-              recipe_name: {
-                type: SchemaType.STRING,
-              },
-              recipe_content: {
-                type: SchemaType.STRING,
-              }
+          properties: {
+            recipe_content: {
+              type: SchemaType.STRING,
+            },
           },
         },
       },
     });
 
-    const preCondition = 'I want you to come up with 1 recipe of the users input. If the user does not dont provide you any input here I wish you to come up with 1 random recipe. response content should contains all full recipie with all the steps and html code included in the string. Users input here is provided here for ingridiens that should be included:';
+    const preCondition =
+      "I want you to come up with 1 recipe of the users input. If the user does not dont provide you any input here I wish you to come up with 1 random recipe. response content should contains a full recipie with all the steps. It should be in working html code that can be set with dangerouslySetInnerHTML in react. Users input here is provided for ingridiens that should be included:";
     const prompt = `${preCondition} ${req.body}`;
 
     // Ensure prompt is not null and is of the expected type

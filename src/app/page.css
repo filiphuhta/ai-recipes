@@ -91,6 +91,7 @@
 }
 
 .recipeResults {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -103,7 +104,7 @@
   background-color: #ffffff; /* White card background */
 }
 
-.recipeCard h2 {
+.recipeCard h2, .recipeCard h3, .recipeCard h4 {
   margin-bottom: 10px;
   color: #004D40; /* Dark green for recipe name */
 }
@@ -112,6 +113,9 @@
 .recipeCard ol {
   margin-left: 20px;
   color: #004D40; /* Dark green for list text */
+}
+.recipeCard li {
+  padding: 1rem;
 }
 
 @media (max-width: 600px) {
