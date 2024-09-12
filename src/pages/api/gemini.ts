@@ -14,7 +14,6 @@ export default async function handler(
   if (API_KEY) {
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({
-      // Using `responseMimeType` requires either a Gemini 1.5 Pro or 1.5 Flash model
       model: "gemini-1.5-flash",
       generationConfig: {
         responseMimeType: "application/json",
@@ -33,11 +32,9 @@ export default async function handler(
       "I want you to come up with 1 recipe of the users input. If the user does not dont provide you any input here I wish you to come up with 1 random recipe. response content should contains a full recipie with all the steps. It should be in working html code that can be set with dangerouslySetInnerHTML in react. Users input here is provided for ingridiens that should be included:";
     const prompt = `${preCondition} ${req.body}`;
 
-    // Ensure prompt is not null and is of the expected type
     if (prompt) {
       const result = await model.generateContent(prompt);
       const resultText = await result.response.text();
-      console.log(resultText);
       res.status(200).json({ message: resultText });
     } else {
       res.status(400).json({ message: "Invalid prompt" });

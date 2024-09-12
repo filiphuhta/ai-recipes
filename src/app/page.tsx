@@ -29,7 +29,7 @@ export default function Home() {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setIsLoading(false); // Hide the spinner after fetch
+      setIsLoading(false); 
     }
   };
 
@@ -51,10 +51,8 @@ export default function Home() {
             </button>
           </form>
 
-          {/* Loading Spinner */}
           {isLoading && <div className="spinner">Loading...</div>}
 
-          {/* Recipe Results */}
           <div className="recipeResults">
             {recipe.recipe_content !== '' && recipe.recipe_name !== '' && (
               <div className="recipeCard">
