@@ -1,0 +1,92 @@
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #212121;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #424242;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.page h1 {
+  color: #e0f2f1;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputField {
+  background-color: #303030;
+  border: 1px solid #b2dfdb;
+  color: #e0f2f1;
+  border-radius: 8px;
+  padding: 10px;
+  height: 150px;
+  font-size: 16px;
+  resize: none;
+  outline: none;
+}
+
+.inputField::placeholder {
+  color: #b2dfdb;
+}
+
+.fileLabel {
+  color: #e0f2f1;
+  font-size: 14px;
+}
+
+.fileInput {
+  color: #e0f2f1;
+}
+
+.submitButton {
+  background-color: #b2dfdb;
+  color: #212121;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #e0f2f1;
+}
+
+@media (max-width: 600px) {
+  .chatContainer {
+    padding: 16px;
+  }
+
+  .inputField {
+    height: 120px;
+  }
+
+  .submitButton {
+    padding: 10px 16px;
+  }
+}
