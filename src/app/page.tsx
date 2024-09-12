@@ -1,9 +1,11 @@
-"use client"
+"use client";
 import { useState } from "react";
-import './page.css'
+import './page.css';
 
 export default function Home() {
   const [inputText, setInputText] = useState("");
+  const [recipe, setRecipe] = useState({ recipe_name: "", recipe_content: "", });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputText(e.target.value);
@@ -11,6 +13,7 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true); // Show the spinner
     try {
       const response = await fetch("/api/gemini", {
         method: "POST",
@@ -18,12 +21,14 @@ export default function Home() {
       });
       if (response.ok) {
         const result = await response.json();
-        console.log("Success:", result);
+        setRecipe(result); // Save the recipe result to state
       } else {
         console.error("Error:", response.statusText);
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setIsLoading(false); // Hide the spinner after fetch
     }
   };
 
@@ -31,7 +36,8 @@ export default function Home() {
     <div className="page">
       <main className="main">
         <div className="chatContainer">
-          <h1>Submit Your Prompt</h1>
+          <h1>Recipe generator</h1>
+          <p>Write some ingridients you want to include in your recipe 🥛🍗🌽🍓</p>
           <form onSubmit={handleSubmit} className="form">
             <textarea
               className="inputField"
@@ -43,6 +49,19 @@ export default function Home() {
               Submit
             </button>
           </form>
+
+          {/* Loading Spinner */}
+          {isLoading && <div className="spinner">Loading...</div>}
+
+          {/* Recipe Results */}
+          <div className="recipeResults">
+            {recipe.recipe_content !== '' && recipe.recipe_name !== '' && (
+              <div className="recipeCard">
+                <h2>{recipe.recipe_name}</h2>
+                <div dangerouslySetInnerHTML={{ __html: recipe.recipe_content }} />
+              </div>)
+            }
+          </div>
         </div>
       </main>
     </div>

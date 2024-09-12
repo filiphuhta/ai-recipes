@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #212121;
+  background-color: #ffffff; /* White background */
 }
 
 .main {
@@ -16,7 +16,7 @@
 .chatContainer {
   display: flex;
   flex-direction: column;
-  background-color: #424242;
+  background-color: #E0F2F1; /* Light green background */
   border-radius: 16px;
   padding: 20px;
   max-width: 600px;
@@ -24,9 +24,16 @@
 }
 
 .page h1 {
-  color: #e0f2f1;
-  text-align: center;
+  color: #004D40; /* Dark green color */
+  text-align: left;
   font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.page p {
+  color: #004D40; /* Dark green color */
+  text-align: left;
+  font-size: 16px;
   margin-bottom: 20px;
 }
 
@@ -37,9 +44,9 @@
 }
 
 .inputField {
-  background-color: #303030;
-  border: 1px solid #b2dfdb;
-  color: #e0f2f1;
+  background-color: #ffffff; /* White input background */
+  border: 1px solid #004D40; /* Dark green border */
+  color: #004D40; /* Dark green text color */
   border-radius: 8px;
   padding: 10px;
   height: 150px;
@@ -49,21 +56,21 @@
 }
 
 .inputField::placeholder {
-  color: #b2dfdb;
+  color: #00695C; /* Medium green for placeholder */
 }
 
 .fileLabel {
-  color: #e0f2f1;
+  color: #004D40; /* Dark green text */
   font-size: 14px;
 }
 
 .fileInput {
-  color: #e0f2f1;
+  color: #004D40; /* Dark green text */
 }
 
 .submitButton {
-  background-color: #b2dfdb;
-  color: #212121;
+  background-color: #00695C; /* Medium green button */
+  color: #ffffff; /* White text */
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
@@ -74,7 +81,37 @@
 }
 
 .submitButton:hover {
-  background-color: #e0f2f1;
+  background-color: #004D40; /* Dark green on hover */
+}
+
+.spinner {
+  margin: 20px 0;
+  font-size: 20px;
+  color: #00695C; /* Medium green spinner text */
+}
+
+.recipeResults {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recipeCard {
+  padding: 20px;
+  border: 1px solid #00695C; /* Medium green border */
+  border-radius: 10px;
+  background-color: #ffffff; /* White card background */
+}
+
+.recipeCard h2 {
+  margin-bottom: 10px;
+  color: #004D40; /* Dark green for recipe name */
+}
+
+.recipeCard ul,
+.recipeCard ol {
+  margin-left: 20px;
+  color: #004D40; /* Dark green for list text */
 }
 
 @media (max-width: 600px) {

@@ -1,32 +1,41 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 type ResponseData = {
   message: string;
 };
-
-function fileToGenerativePart(path, mimeType) {
-  return {
-    inlineData: {
-      data: Buffer.from(fs.readFileSync(path)).toString("base64"),
-      mimeType,
-    },
-  };
-}
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
   const API_KEY = process.env.API_KEY;
-  console.log(API_KEY);
-  console.log(req.body);
 
   if (API_KEY) {
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({
+      // Using `responseMimeType` requires either a Gemini 1.5 Pro or 1.5 Flash model
+      model: "gemini-1.5-flash",
+      // Set the `responseMimeType` to output JSON
+      // Pass the schema object to the `responseSchema` field
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: SchemaType.OBJECT,
+            properties: {
+              recipe_name: {
+                type: SchemaType.STRING,
+              },
+              recipe_content: {
+                type: SchemaType.STRING,
+              }
+          },
+        },
+      },
+    });
 
-    const prompt = req.body;
+    const preCondition = 'I want you to come up with 1 recipe of the users input. If the user does not dont provide you any input here I wish you to come up with 1 random recipe. response content should contains all full recipie with all the steps and html code included in the string. Users input here is provided here for ingridiens that should be included:';
+    const prompt = `${preCondition} ${req.body}`;
 
     // Ensure prompt is not null and is of the expected type
     if (prompt) {
