@@ -29,7 +29,7 @@ export default function Home() {
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -52,14 +52,16 @@ export default function Home() {
           </form>
 
           {isLoading && <div className="spinner">Loading...</div>}
+          
+          {recipe.recipe_content !== '' && recipe.recipe_name !== '' && (
+            <div className="recipeResults">
 
-          <div className="recipeResults">
-            {recipe.recipe_content !== '' && recipe.recipe_name !== '' && (
               <div className="recipeCard">
                 <div dangerouslySetInnerHTML={{ __html: recipe.recipe_content }} />
-              </div>)
-            }
-          </div>
+              </div>
+            </div>
+          )
+          }
         </div>
       </main>
     </div>
