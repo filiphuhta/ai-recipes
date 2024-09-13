@@ -106,7 +106,8 @@
 }
 
 .recipeCard h2, .recipeCard h3, .recipeCard h4 {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   color: #004D40; /* Dark green for recipe name */
 }
 

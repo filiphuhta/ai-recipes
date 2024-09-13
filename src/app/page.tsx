@@ -1,10 +1,17 @@
 "use client";
 import { useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress"; // Import Material UI Spinner
+import Recipe from './recipe';
 import './page.css';
 
 export default function Home() {
   const [inputText, setInputText] = useState("");
-  const [recipe, setRecipe] = useState({ recipe_name: '', recipe_content: '', });
+  const [recipe, setRecipe] = useState({
+    recipe_title: '',
+    recipe_ingredients: [],
+    recipe_steps: [],
+    recipe_summary: ''
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -13,7 +20,7 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true); // Show the spinner
+    setIsLoading(true);
     try {
       const response = await fetch("/api/gemini", {
         method: "POST",
@@ -21,8 +28,7 @@ export default function Home() {
       });
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
-        setRecipe(JSON.parse(result.message)); // Save the recipe result to state
+        setRecipe(JSON.parse(result.message));
       } else {
         console.error("Error:", response.statusText);
       }
@@ -37,8 +43,8 @@ export default function Home() {
     <div className="page">
       <main className="main">
         <div className="chatContainer">
-          <h1>Recipe generator</h1>
-          <p>Write some ingridients you want to include in your recipe 🥛🍗🌽🍓</p>
+          <h1>Recipe Generator</h1>
+          <p>Write some ingredients you want to include in your recipe 🥛🍗🌽🍓</p>
           <form onSubmit={handleSubmit} className="form">
             <textarea
               className="inputField"
@@ -46,22 +52,16 @@ export default function Home() {
               value={inputText}
               onChange={handleInputChange}
             ></textarea>
-            <button type="submit" className="submitButton">
-              Submit
-            </button>
+            <button type="submit" className="submitButton">Submit</button>
           </form>
 
-          {isLoading && <div className="spinner">Loading...</div>}
-          
-          {recipe.recipe_content !== '' && recipe.recipe_name !== '' && (
-            <div className="recipeResults">
-
-              <div className="recipeCard">
-                <div dangerouslySetInnerHTML={{ __html: recipe.recipe_content }} />
-              </div>
+          {isLoading ? (
+            <div className="spinner">
+              <CircularProgress sx={{ color: '#00695C' }} />
             </div>
-          )
-          }
+          ) : (
+            recipe.recipe_title && <Recipe recipe={recipe} />
+          )}
         </div>
       </main>
     </div>

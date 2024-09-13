@@ -13,7 +13,6 @@ export default async function handler(
 
   if (API_KEY) {
     const genAI = new GoogleGenerativeAI(API_KEY);
-    // TODO refactor this to be an object with recipe_ingridients, recipe_title, recipe_summary etc.
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
       generationConfig: {
@@ -21,16 +20,20 @@ export default async function handler(
         responseSchema: {
           type: SchemaType.OBJECT,
           properties: {
-            recipe_content: {
-              type: SchemaType.STRING,
-            },
+            recipe_title: { type: SchemaType.STRING },
+            recipe_ingredients: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+            recipe_steps: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+            recipe_summary: { type: SchemaType.STRING },
           },
         },
       },
     });
-
-    const preCondition =
-      "I want you to come up with 1 recipe of the users input. If the user does not dont provide you any input here I wish you to come up with 1 random recipe. response content should contains a full recipie with all the steps. It should be in working html code that can be set with dangerouslySetInnerHTML in react. Users input here is provided for ingridiens that should be included:";
+    
+    const preCondition = `
+      I want you to come up with a recipe based on the user's input. If the user doesn't provide any input, 
+      generate a random recipe. The response content should include all ingredients, steps, and a summary.  
+      User's input for ingredients:`;
+    
     const prompt = `${preCondition} ${req.body}`;
 
     if (prompt) {
