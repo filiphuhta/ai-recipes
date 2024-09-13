@@ -13,6 +13,7 @@ export default async function handler(
 
   if (API_KEY) {
     const genAI = new GoogleGenerativeAI(API_KEY);
+    // TODO refactor this to be an object with recipe_ingridients, recipe_title, recipe_summary etc.
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
       generationConfig: {
